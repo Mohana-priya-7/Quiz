@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Result</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Your Scores: <span id="score"></span></h2>
+    <div class="button-row">
+      <button onclick="window.location.href='view_answers.html'">View Answers</button>
+      <button onclick="window.location.href='quiz.html'">Retake Quiz</button>
+    </div>
+  </div>
+  <script>document.getElementById("score").innerText = localStorage.getItem("score") || 0;
+  </script>
+</body>
+</html>

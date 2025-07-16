@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Answers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7ff;
+    }
+
+    .container {
+      max-width: 90%;
+      margin: 2rem auto;
+      padding-bottom: 2rem;
+    }
+
+    .question-box {
+      background-color: #eef4ff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+    }
+
+    .question-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 1.05rem;
+    }
+
+    .highlight-correct {
+      background-color: #a5dda5;
+    }
+
+    .highlight-wrong {
+      background-color: rgb(248, 166, 166);
+    }
+
+    .icon {
+      margin-right: 8px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="answers-list"></div>
+
+  <script>
+    const quizData = JSON.parse(localStorage.getItem("answers")) || [];
+    const userAnswers = JSON.parse(localStorage.getItem("userSelections")) || [];
+    const list = document.getElementById("answers-list");
+
+    if (!quizData.length || !userAnswers.length) {
+      list.innerHTML = "<p>No data available. Please complete the quiz first.</p>";
+    } else {
+      quizData.forEach((question, index) => {
+        const userAns = userAnswers[index];
+        const correctAns = question.correct;
+        const qDiv = document.createElement("div");
+        qDiv.classList.add("question-box");
+
+        const options = ['a', 'b', 'c', 'd'];
+        let optionsHTML = '<div class="option-list">';
+
+        options.forEach(opt => {
+          let className = '';
+          let icon = '';
+
+          if (opt === correctAns) {
+            className = 'highlight-correct';
+            icon = "<span class='icon' style='color:green;'>✔️</span>";
+          } else if (opt === userAns) {
+            className = 'highlight-wrong';
+            icon = "<span class='icon' style='color:red;'>❌</span>";
+          }
+
+          optionsHTML += `
+            <div class="option ${className}">
+              ${icon}${opt}. ${question[opt]}
+            </div>
+          `;
+        });
+
+        optionsHTML += '</div>';
+
+        qDiv.innerHTML = `
+          <h3>Question ${index + 1}</h3>
+          <p style="font-weight: bold;">${question.question}</p>
+          ${optionsHTML}
+        `;
+
+        list.appendChild(qDiv);
+      });
+    }
+  </script>
+</body>
+</html>
