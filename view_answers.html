@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Answers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f7ff;
+    }
+
+    .container {
+      max-width: 90%;
+      margin: 2rem auto;
+      padding-bottom: 2rem;
+    }
+
+    .question-box {
+      background-color: #eef4ff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+    }
+
+    .question-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .option-list 
+    {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .option 
+    {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 1.05rem;
+    }
+    .highlight-correct
+    {
+      background-color: #e6ffe6;
+    }
+    .highlight-wrong 
+    {
+      background-color: rgb(253, 104, 104);
+    }
+    .correct 
+    {
+      color: green;
+      font-weight: bold;
+    }
+    .wrong 
+    {
+      color: red;
+      font-weight: bold;
+    }
+    .user-answer 
+    {
+      margin-top: 14px;
+      font-size: 1rem;
+    }
+
+    .user-answer span
+    {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="answers-list"></div>
+
+  <script>
+    const quizData = JSON.parse(localStorage.getItem("answers")) || [];
+    const userAnswers = JSON.parse(localStorage.getItem("userSelections")) || [];
+    const list = document.getElementById("answers-list");
+
+    if (!quizData.length || !userAnswers.length) {
+      list.innerHTML = "<p>No data available. Please complete the quiz first.</p>";
+    } else {
+      quizData.forEach((question, index) => {
+        const userAns = userAnswers[index];
+        const correctAns = question.correct;
+
+        const qDiv = document.createElement("div");
+        qDiv.classList.add("question-box");
+
+        const optionsHTML = `
+          <div class="option-list">
+            <div class="option ${userAns === 'a' ? (userAns === correctAns ? 'highlight-correct' : 'highlight-wrong') : ''}">
+              a. ${question.a} ${correctAns === 'a' ? '✅' : ''}
+            </div>
+            <div class="option ${userAns === 'b' ? (userAns === correctAns ? 'highlight-correct' : 'highlight-wrong') : ''}">
+              b. ${question.b} ${correctAns === 'b' ? '✅' : ''}
+            </div>
+            <div class="option ${userAns === 'c' ? (userAns === correctAns ? 'highlight-correct' : 'highlight-wrong') : ''}">
+              c. ${question.c} ${correctAns === 'c' ? '✅' : ''}
+            </div>
+            <div class="option ${userAns === 'd' ? (userAns === correctAns ? 'highlight-correct' : 'highlight-wrong') : ''}">
+              d. ${question.d} ${correctAns === 'd' ? '✅' : ''}
+            </div>
+          </div>
+        `;
+        qDiv.innerHTML = `
+          <h3>Question ${index + 1}</h3>
+          <p style="font-weight: bold;">${question.question}</p>
+          ${optionsHTML}
+          <p class="user-answer">
+            <span>Your answer:</span>
+            <span class="${userAns === correctAns ? 'correct' : 'wrong'}">
+              ${userAns ? question[userAns] : 'No Answer'}
+            </span><br>
+            <span>Correct answer:</span>
+            <span class="correct">${question[correctAns]}</span>
+          </p>
+        `;
+        list.appendChild(qDiv);
+      });
+    }
+  </script>
+</body>
+</html>

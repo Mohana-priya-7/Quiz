@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Signup</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    body
+    {
+    background-color: #0b264e;
+    background-image: linear-gradient(315deg, #c1d1e9 45%, #7fb3fc 140%);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    overflow: hidden;
+    margin:0;
+    }
+    .auth-container 
+    {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 40px 56px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 0 10px #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+.auth-container h3 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 28px;
+    color: #222;
+}
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+}
+.auth-container input {
+    margin-bottom: 18px;
+    padding: 13px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-family: inherit;
+}
+.auth-container button {
+    padding: 12px;
+    background: #d379fa;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.08rem;
+    font-family: inherit;
+    font-weight: 500;
+    margin-bottom: 6px;
+    transition: background 0.2s;
+}
+.auth-container button:not(.toggle):hover, .auth-container button:not(.toggle):focus, .auth-container button:not(.toggle):active {
+    background: #8842a7;
+}
+.auth-container .toggle {
+    background: none;
+    color: #8842a7;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1rem;
+    text-decoration: underline;
+    font-family: inherit;
+}
+.auth-container .error {
+    color: #d8000c;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.auth-container .success {
+    color: #388e3c;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h3 id="form-title">Login</h3>
+        <div id="message"></div>
+        <form id="login-form">
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <button type="button" class="toggle" id="show-signup">Don't have an account? Sign up</button>
+        </form>
+        <form id="signup-form" style="display:none;">
+            <input type="text" id="signup-username" placeholder="Username" required>
+            <input type="password" id="signup-password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+            <button type="button" class="toggle" id="show-login">Already have an account? Login</button>
+        </form>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>
